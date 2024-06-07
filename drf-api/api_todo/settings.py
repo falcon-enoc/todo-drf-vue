@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+BASE_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,6 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+THIRD_APPS = [
+    'rest_framework',
+]
+
+OWN_APPS = [
+    'todo',
+]
+
+INSTALLED_APPS = BASE_APPS + THIRD_APPS + OWN_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -103,12 +113,24 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# Configura el idioma predeterminado para el proyecto Django
+# 'es-cl' corresponde al español de Chile.
+LANGUAGE_CODE = 'es-cl'
 
-TIME_ZONE = 'UTC'
+# Configura la zona horaria predeterminada.
+# 'America/Santiago' corresponde a la hora local de Chile continental.
+TIME_ZONE = 'America/Santiago'
 
+# Habilita la internacionalización (I18N).
+# Esto permite que tu aplicación soporte múltiples idiomas.
 USE_I18N = True
 
+# Habilita la localización (L10N).
+# Esto permite formatear números y fechas según las convenciones locales.
+USE_L10N = True
+
+# Habilita el uso de zonas horarias.
+# Esto asegura que los tiempos se almacenen en UTC y se conviertan a la zona horaria local del usuario.
 USE_TZ = True
 
 
