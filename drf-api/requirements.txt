@@ -1,4 +1,5 @@
 django
-pip install djangorestframework
-pip install markdown       # Markdown support for the browsable API.
-pip install django-filter  # Filtering support
+djangorestframework
+markdown       # Markdown support for the browsable API.
+django-filter  # Filtering support
+pyscopg2-binary
