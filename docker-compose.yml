@@ -13,7 +13,7 @@ services:
       - "5434:5432"
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
-      interval: 10s
+      interval: 5s
       timeout: 5s
       retries: 5
 
@@ -31,7 +31,7 @@ services:
         condition: service_healthy
     ports:
       - "8000:8000"
-    command: ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+    #command: ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
 
   frontend:
     build: ./vue-ui
