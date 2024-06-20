@@ -19,4 +19,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the app code
 COPY . /app/
 
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+RUN chmod +x /app/init.sh
+
+# Variables de entorno para init.sh
+ENV DJANGO_SUPERUSER_USERNAME todoadmin
+ENV DJANGO_SUPERUSER_EMAIL admin@admin.com
+ENV DJANGO_SUPERUSER_PASSWORD adminadmin
+
+#CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["sh", "/app/init.sh"]
