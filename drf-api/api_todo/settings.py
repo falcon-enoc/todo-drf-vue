@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+}
 
 # Application definition
 
@@ -41,6 +44,7 @@ BASE_APPS = [
 
 THIRD_APPS = [
     'rest_framework',
+    'django_filters',
 ]
 
 OWN_APPS = [
