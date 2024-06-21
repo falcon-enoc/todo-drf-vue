@@ -1,18 +1,31 @@
 # Django Rest Framework and Vue.js Todo App
 
-## TODO BACKEND
+## Run Project
 
-    - cd drf-api
-    - pip install -r requirements.txt
-    - python manage.py makemigrations
-    - python manage.py migrate
-    - python manage.py runserver
+    - cd todo-drf-vue
+    - docker-compose up --build
 
-## TODO FRONTEND
+## DOCS
 
-    - cd vue-ui
-    - npm i
-    - npm run dev
+    https://drive.google.com/drive/folders/1Z6hnGqmVlOd7GviNV33nso5r9gtGDEdU?usp=sharing
+
+## API
+
+    * Tasks
+    - GET /api/tasks/
+    - GET /api/tasks/<id>
+    - GET /api/tasks/?priority=<High/Low>
+    - GET /api/tasks/?completed=<True/False>
+    
+    * Users
+    - GET /api/users/
+    - GET /api/users/<id>/
+
+    * Assigns
+    - GET /api/assigns/
+    - GET /api/assigns/<id>
+    - GET /api/assigns/?user=<id>
+    - GET /api/assigns/?task=<id>
 
 ## CONVENTIONAL COMMITS
 
