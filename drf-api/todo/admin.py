@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Todo, Hola
+from .models import Task, User, Assign
 
-admin.site.register(Todo)
-admin.site.register(Hola)
+admin.site.register(Task)
+admin.site.register(User)
+admin.site.register(Assign)
+
