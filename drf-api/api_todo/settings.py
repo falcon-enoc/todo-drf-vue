@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-@9jpfao-*uy)-=1q54=t9e+avqb509oc7$c(c3goebqufw)aij
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
@@ -45,6 +45,7 @@ BASE_APPS = [
 THIRD_APPS = [
     'rest_framework',
     'django_filters',
+    'corsheaders',
 ]
 
 OWN_APPS = [
@@ -56,6 +57,7 @@ INSTALLED_APPS = BASE_APPS + THIRD_APPS + OWN_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -64,6 +66,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'api_todo.urls'
+
+CORS_ALLOW_ALL_ORIGINS = True
+APPEND_SLASH = True  # Agrega automáticamente una barra al final de las URLs
 
 TEMPLATES = [
     {
