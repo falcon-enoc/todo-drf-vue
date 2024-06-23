@@ -1,3 +1,4 @@
+python-dotenv
 django
 djangorestframework
 markdown       # Markdown support for the browsable API.
