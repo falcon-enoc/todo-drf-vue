@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   db:
-    image: postgres:latest
+    image: postgres:12.19-alpine3.20
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
