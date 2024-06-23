@@ -41,8 +41,8 @@ services:
     volumes:
       - ./vue-ui:/app
       - /app/node_modules
-    environment:
-      - VITE_BACKEND_URL=http://app:8000
+    # environment:
+    #   - VITE_BACKEND_URL=http://app:8000
 
 volumes:
   postgres_data:
