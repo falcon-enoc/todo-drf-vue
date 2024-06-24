@@ -11,10 +11,16 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+dotenv_path = BASE_DIR / '.env'
+load_dotenv(dotenv_path)
+
+print(f"Connecting to PostgreSQL database: {os.getenv('POSTGRES_DB')} at {os.getenv('POSTGRES_HOST')} on port {os.getenv('POSTGRES_PORT')}")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -25,7 +31,7 @@ SECRET_KEY = 'django-insecure-@9jpfao-*uy)-=1q54=t9e+avqb509oc7$c(c3goebqufw)aij
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
@@ -45,6 +51,7 @@ BASE_APPS = [
 THIRD_APPS = [
     'rest_framework',
     'django_filters',
+    'corsheaders',
 ]
 
 OWN_APPS = [
@@ -56,6 +63,7 @@ INSTALLED_APPS = BASE_APPS + THIRD_APPS + OWN_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -64,6 +72,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'api_todo.urls'
+
+CORS_ALLOW_ALL_ORIGINS = True
+APPEND_SLASH = True  # Agrega automáticamente una barra al final de las URLs
 
 TEMPLATES = [
     {
@@ -89,8 +100,12 @@ WSGI_APPLICATION = 'api_todo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': os.getenv('POSTGRES_HOST'),
+        'PORT': os.getenv('POSTGRES_PORT'),
     }
 }
 
