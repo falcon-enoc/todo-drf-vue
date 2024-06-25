@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Task, User, Assign
+from .models import Task, User, Assign, Tag
 
 class TaskSerializer(serializers.ModelSerializer):
     refeer_task_title = serializers.CharField(source='refeer_task.title', read_only=True)  # Campo adicional para mostrar el título de la tarea referida
@@ -15,6 +15,10 @@ class TaskSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = ['created_at', 'updated_at']
 
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ['id', 'tag']
 
 class UserSerializer(serializers.ModelSerializer):
     assignments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)  # Lista de IDs de asignaciones
