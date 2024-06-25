@@ -5,6 +5,12 @@
     - cd todo-drf-vue
     - docker-compose up --build
 
+#  Clean Project
+
+    - docker-compose down
+    - docker-compose down -v // Cuidado, elimina volumenes y contenedores, preserva las imagenes
+    - docker volume prune
+
 ## DOCS
 
     https://drive.google.com/drive/folders/1Z6hnGqmVlOd7GviNV33nso5r9gtGDEdU?usp=sharing

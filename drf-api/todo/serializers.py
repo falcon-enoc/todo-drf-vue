@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Task, User, Assign, Tag
+from .models import Task, User, Assign, Tag, Project, Board
 
 class TaskSerializer(serializers.ModelSerializer):
     refeer_task_title = serializers.CharField(source='refeer_task.title', read_only=True)  # Campo adicional para mostrar el título de la tarea referida
@@ -22,11 +22,11 @@ class TagSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     assignments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)  # Lista de IDs de asignaciones
+    projects = serializers.PrimaryKeyRelatedField(many=True, read_only=True)  # Lista de IDs de proyectos del usuario
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'name', 'apellido', 'role', 'assignments']
-
+        fields = ['id', 'username', 'name', 'apellido', 'role', 'assignments', 'projects']
 
 class AssignSerializer(serializers.ModelSerializer):
     task_title = serializers.CharField(source='task.title', read_only=True)  # Campo adicional para mostrar el título de la tarea
@@ -35,3 +35,19 @@ class AssignSerializer(serializers.ModelSerializer):
     class Meta:
         model = Assign
         fields = ['id', 'task', 'task_title', 'user', 'user_username']
+
+class BoardSerializer(serializers.ModelSerializer):
+    tasks = serializers.PrimaryKeyRelatedField(many=True, read_only=True)  # Lista de IDs de tareas en el tablero
+
+    class Meta:
+        model = Board
+        fields = '__all__'
+        read_only_fields = ['created_at', 'updated_at']
+
+class ProjectSerializer(serializers.ModelSerializer):
+    boards = serializers.PrimaryKeyRelatedField(many=True, read_only=True)  # Lista de IDs de tableros en el proyecto
+
+    class Meta:
+        model = Project
+        fields = '__all__'
+        read_only_fields = ['created_at', 'updated_at']
