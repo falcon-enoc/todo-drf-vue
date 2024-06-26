@@ -2,35 +2,21 @@
   <div>
     <Header />
 
-    <main>
+    <main class="content">
       <slot></slot>
     </main>
-
-    <footer>
-      <p>© 2024 Vue Example</p>
-    </footer>
+    
+    <Footer />
   </div>
 </template>
 
 <script setup>
 import Header from "../components/header.vue";
+import Footer from "../components/footer.vue";
 </script>
 
 <style scoped>
-header {
-  background: #333;
-  color: #fff;
-  padding: 10px;
-}
-
-footer {
-  background: #333;
-  color: #fff;
-  text-align: center;
-  padding: 10px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  box-sizing: border-box;
+.content {
+  padding-bottom: 5rem; /* Asegura espacio para el footer */
 }
 </style>
