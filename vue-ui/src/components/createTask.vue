@@ -1,83 +1,88 @@
 <!-- CreateTaskComponent.vue -->
 <template>
-  <div class="container mt-4">
-    <h2>Crear Nueva Tarea</h2>
-    <form @submit.prevent="submitTask">
-      <div class="mb-3">
-        <label for="title" class="form-label">Título:</label>
-        <input type="text" id="title" class="form-control" v-model="task.title" required />
-      </div>
+  <div>
+    <!-- Botón que abre el modal -->
+    <button type="button" class="btn btn-primary" @click="openModal">Crear Nueva Tarea</button>
 
-      <div class="mb-3">
-        <label for="priority" class="form-label">Prioridad:</label>
-        <select id="priority" class="form-select" v-model="task.priority" required>
-          <option value="High">High</option>
-          <option value="Low">Low</option>
-        </select>
-      </div>
+    <!-- Modal del formulario -->
+    <div v-if="showModal" class="modal">
+      <div class="modal-content">
+        <span class="close" @click="closeModal">&times;</span>
+        <h5 class="modal-title">Crear Nueva Tarea</h5>
+        <form @submit.prevent="submitTask">
+          <div class="mb-3">
+            <label for="title" class="form-label">Título:</label>
+            <input type="text" id="title" class="form-control" v-model="task.title" required />
+          </div>
 
-      <div class="mb-3">
-        <label for="description" class="form-label">Descripción:</label>
-        <textarea id="description" class="form-control" v-model="task.description"></textarea>
-      </div>
+          <div class="mb-3">
+            <label for="priority" class="form-label">Prioridad:</label>
+            <select id="priority" class="form-select" v-model="task.priority" required>
+              <option value="High">High</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
 
-      <div class="mb-3">
-        <label for="deadline_time" class="form-label">Fecha de Vencimiento:</label>
-        <input
-          type="datetime-local"
-          id="deadline_time"
-          class="form-control"
-          v-model="task.deadline_time"
-        />
-      </div>
-      <!-- Desplegables de etiquedas -->
-      <div class="mb-3">
-        <label for="tags" class="form-label">Etiquetas:</label>
-        <div class="d-flex">
-          <multiselect
-            v-model="selectedTags"
-            :options="tags"
-            :multiple="true"
-            :close-on-select="false"
-            :clear-on-select="false"
-            :preserve-search="true"
-            placeholder="Selecciona etiquetas"
-            label="tag"
-            track-by="id"
-            :preselect-first="true"
-            class="custom-multiselect flex-grow-1 me-2"
-          >
-            <template v-slot:tag="{ option, remove }">
-              <span class="custom__tag badge bg-primary me-2">
-                <span>{{ option.tag }}</span>
-                <span class="custom__remove" @click="remove(option)">❌</span>
-              </span>
-            </template>
-            <template v-slot:option="{ option }">
-              <div class="custom__option">
-                <span>{{ option.tag }}</span>
-              </div>
-            </template>
-          </multiselect>
-          <button type="button" class="btn btn-primary" @click="showTagPanel = true">Gestionar</button>
-        </div>
-      </div>
-      
-      <TagPanel v-if="showTagPanel" @close="showTagPanel = false" @tags-updated="loadTags" />
-      
-      <div class="mb-3">
-        <label for="refeer_task" class="form-label">Referencia a Tarea:</label>
-        <input type="number" id="refeer_task" class="form-control" v-model="task.refeer_task" />
-      </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Descripción:</label>
+            <textarea id="description" class="form-control" v-model="task.description"></textarea>
+          </div>
 
-      <div class="mb-3">
-        <label for="level" class="form-label">Nivel:</label>
-        <input type="number" id="level" class="form-control" v-model="task.level" />
-      </div>
+          <div class="mb-3">
+            <label for="deadline_time" class="form-label">Fecha de Vencimiento:</label>
+            <input type="datetime-local" id="deadline_time" class="form-control" v-model="task.deadline_time" />
+          </div>
 
-      <button type="submit" class="btn btn-success">Crear Tarea</button>
-    </form>
-    <div v-if="error" class="alert alert-danger mt-3">Ocurrió un error: {{ error.message }}</div>
+          <!-- Desplegables de etiquetas -->
+          <div class="mb-3">
+            <label for="tags" class="form-label">Etiquetas:</label>
+            <div class="d-flex">
+              <multiselect
+                v-model="selectedTags"
+                :options="tags"
+                :multiple="true"
+                :close-on-select="false"
+                :clear-on-select="false"
+                :preserve-search="true"
+                placeholder="Selecciona etiquetas"
+                label="tag"
+                track-by="id"
+                :preselect-first="true"
+                class="custom-multiselect flex-grow-1 me-2"
+              >
+                <template v-slot:tag="{ option, remove }">
+                  <span class="custom__tag badge bg-primary me-2">
+                    <span>{{ option.tag }}</span>
+                    <span class="custom__remove" @click="remove(option)">❌</span>
+                  </span>
+                </template>
+                <template v-slot:option="{ option }">
+                  <div class="custom__option">
+                    <span>{{ option.tag }}</span>
+                  </div>
+                </template>
+              </multiselect>
+              <button type="button" class="btn btn-primary" @click="showTagPanel = true">Gestionar</button>
+            </div>
+          </div>
+
+          <TagPanel v-if="showTagPanel" @close="showTagPanel = false" @tags-updated="loadTags" />
+
+          <div class="mb-3">
+            <label for="refeer_task" class="form-label">Referencia a Tarea:</label>
+            <input type="number" id="refeer_task" class="form-control" v-model="task.refeer_task" />
+          </div>
+
+          <div class="mb-3">
+            <label for="level" class="form-label">Nivel:</label>
+            <input type="number" id="level" class="form-control" v-model="task.level" />
+          </div>
+
+          <button type="submit" class="btn btn-success">Crear Tarea</button>
+        </form>
+        <div v-if="error" class="alert alert-danger mt-3">Ocurrió un error: {{ error.message }}</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -89,8 +94,15 @@ import { getTags } from "../services/tagService";
 
 export default {
   components: { Multiselect, TagPanel },
+  props: {
+    boardId: {
+      type: Number,
+      required: true
+    }
+  },
   data() {
     return {
+      showModal: false, // Estado para mostrar u ocultar el modal
       showTagPanel: false,
       task: {
         title: "",
@@ -102,6 +114,7 @@ export default {
         active: true,
         refeer_task: null,
         level: 0,
+        board: this.boardId // Utiliza la prop para asignar el board
       },
       tags: [], // Lista de etiquetas disponibles
       selectedTags: [], // Etiquetas seleccionadas
@@ -112,6 +125,12 @@ export default {
     this.loadTags();
   },
   methods: {
+    openModal() {
+      this.showModal = true;
+    },
+    closeModal() {
+      this.showModal = false;
+    },
     async loadTags() {
       try {
         this.tags = await getTags();
@@ -131,8 +150,10 @@ export default {
         }
 
         await createTask(this.task);
-        alert("Tarea creada con éxito");
+        this.$emit('taskCreated'); // Emitir el evento con los datos de la tarea creada
+        // alert("Tarea creada con éxito");
         this.resetForm();
+        this.closeModal(); // Cierra el modal después de crear la tarea
       } catch (error) {
         this.error = error;
       }
@@ -148,6 +169,7 @@ export default {
         active: true,
         refeer_task: null,
         level: 0,
+        board: this.boardId // Resetea el board al valor de la prop
       };
       this.selectedTags = [];
       this.error = null;
@@ -183,5 +205,40 @@ export default {
 
 .custom__option {
   padding: 0.25em; /* Reduce el padding de las opciones */
+}
+
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: black;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 </style>

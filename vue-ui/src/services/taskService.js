@@ -21,6 +21,17 @@ export const getTaskById = async (id) => {
   }
 };
 
+// Obtener una tarea por board_id
+
+export const getTaskByBoardId = async (board_id) => {
+  try {
+    const response = await api.get(`/tasks/?board=${board_id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // Crear una nueva tarea
 export const createTask = async (task) => {
   try {
@@ -34,7 +45,7 @@ export const createTask = async (task) => {
 // Actualizar una tarea existente
 export const updateTask = async (id, task) => {
   try {
-    const response = await api.put(`/tasks/${id}`, task);
+    const response = await api.put(`/tasks/${id}/`, task);
     return response.data;
   } catch (error) {
     throw error;
