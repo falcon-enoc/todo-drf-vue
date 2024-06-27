@@ -13,7 +13,7 @@ class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['priority', 'completed']
+    filterset_fields = ['priority', 'completed', 'board']
 
 class AssignViewSet(viewsets.ModelViewSet):
     queryset = Assign.objects.all()
@@ -31,7 +31,7 @@ class BoardViewSet(viewsets.ModelViewSet):
     queryset = Board.objects.all()
     serializer_class = BoardSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['tasks']
+    filterset_fields = ['tasks', 'project']
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
