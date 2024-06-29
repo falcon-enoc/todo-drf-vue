@@ -3,14 +3,11 @@
     <button @click="addItem">Agregar Elemento</button>
     <div class="grid-container">
         <div class="tablero" v-for="(item, index) in items" :key="item.id">
-            <div class="elemento">
+             <div class="elemento"> <!-- header elemento -->
                 {{ item.name }}
                 <button @click="openEditModal(item.id)">Editar</button>
-                <CreateTasks 
-                @taskCreated="fetchBoards"
-                :boardId="item.id"/>
+                <button class="delete-btn" @click="removeItemAt(index)">X</button>
             </div>
-            <button class="delete-btn" @click="removeItemAt(index)">X</button>
             <Tasks2 :boardId="item.id" />
         </div>
     </div>
@@ -45,7 +42,6 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import Tasks2 from './tasks2.vue';
-import CreateTasks from './createTask.vue';
 import { createBoard, deleteBoard, getBoardById, updateBoard, getBoardsByProjectId } from '../services/boardService';
 
 const items = ref([]); // Lista inicial de elementos

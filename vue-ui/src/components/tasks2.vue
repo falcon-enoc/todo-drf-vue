@@ -1,5 +1,10 @@
 <template>
     <div class="container">
+        <div class="btn-create-card">
+            <CreateTasks 
+                    @taskCreated="loadTasks"
+                    :boardId="boardId"/>
+        </div>
         <div class="card" v-for="(task, taskIndex) in tasks" :key="taskIndex" @click="openModal(task)">
             {{ task.id }} , {{ task.title }}
         </div>
@@ -13,6 +18,7 @@
 </template>
 
 <script setup>
+import CreateTasks from './createTask.vue';
 import { ref, onMounted, watch } from 'vue';
 import { getTaskByBoardId } from "../services/taskService";
 
