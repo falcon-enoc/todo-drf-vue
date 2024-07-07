@@ -49,7 +49,21 @@ export default {
 
 <style scoped>
 .card-header {
-  background-color: #007bff;
+  background-color: var(--buttons-color);
   color: white;
+}
+
+.btn-primary {
+  background-color: var(--buttons-color);
+  border-color: var(--buttons-color);
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+  background-color: darken(var(--buttons-color), 10%);
+  border-color: darken(var(--buttons-color), 10%);
+}
+
+.btn-primary:focus {
+  box-shadow: none;
 }
 </style>

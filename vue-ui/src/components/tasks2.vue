@@ -1,5 +1,10 @@
 <template>
     <div class="container">
+        <div class="btn-create-card">
+            <CreateTasks 
+                    @taskCreated="loadTasks"
+                    :boardId="boardId"/>
+        </div>
         <div class="card" v-for="(task, taskIndex) in tasks" :key="taskIndex" @click="openModal(task)">
             {{ task.id }} , {{ task.title }}
         </div>
@@ -13,6 +18,7 @@
 </template>
 
 <script setup>
+import CreateTasks from './createTask.vue';
 import { ref, onMounted, watch } from 'vue';
 import { getTaskByBoardId } from "../services/taskService";
 
@@ -65,7 +71,7 @@ watch(() => props.boardId, (newBoardId) => {
 .card {
     height: 50px;
     width: 100%; /* Ocupa todo el ancho disponible dentro del tablero */
-    background-color: #30373e;
+    background-color: var(--secondary-color);
     color: whitesmoke;
     display: flex;
     justify-content: center;

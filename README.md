@@ -5,7 +5,7 @@
     - cd todo-drf-vue
     - docker-compose up --build
 
-#  Clean Project
+# Clean Project
 
     - docker-compose down
     - docker-compose down -v // Cuidado, elimina volumenes y contenedores, preserva las imagenes

@@ -1,16 +1,21 @@
-<!-- componets/board.vue -->
+<!-- src/components/board.vue -->
 <template>
-    <button @click="addItem">Agregar Elemento</button>
+    <button class="btn-add-board" @click="addItem">Agregar Elemento</button>
     <div class="grid-container">
         <div class="tablero" v-for="(item, index) in items" :key="item.id">
-            <div class="elemento">
-                {{ item.name }}
-                <button @click="openEditModal(item.id)">Editar</button>
-                <CreateTasks 
-                @taskCreated="fetchBoards"
-                :boardId="item.id"/>
+            <div class="elemento"> <!-- header elemento -->
+                <p class="titulo">
+                    {{ item.name }}
+                </p>
+                <div class="iconos">
+                    <button class="edit-icon" @click="openEditModal(item.id)">
+                        <img src="../assets/edit-1.svg" alt="Edit" width="24" height="24">
+                    </button>
+                    <button class="delete-icon" @click="removeItemAt(index)">
+                        <img src="../assets/delete-1.svg" alt="Delete" width="24" height="24">
+                    </button>
+                </div>
             </div>
-            <button class="delete-btn" @click="removeItemAt(index)">X</button>
             <Tasks2 :boardId="item.id" />
         </div>
     </div>
@@ -42,10 +47,10 @@
     </div>
 </template>
 
+
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import Tasks2 from './tasks2.vue';
-import CreateTasks from './createTask.vue';
 import { createBoard, deleteBoard, getBoardById, updateBoard, getBoardsByProjectId } from '../services/boardService';
 
 const items = ref([]); // Lista inicial de elementos
@@ -75,7 +80,7 @@ const addItem = async () => {
             id: createdBoard.id,
             name: createdBoard.title
         };
-        items.value.push(newItem);
+        items.value.unshift(newItem); // Agregar al inicio de la lista
         nextId.value++;
     } catch (error) {
         console.error('Error creating board:', error);
@@ -97,7 +102,6 @@ const removeItemAt = async (index) => {
 
 const fetchBoards = async () => {
     try {
-        console.log('fetchBoards llamado'); // Agregar este log
         const response = await getBoardsByProjectId(projectId);
         items.value = response.map(board => ({
             id: board.id,
@@ -142,62 +146,61 @@ const closeModal = () => {
 onMounted(() => {
     fetchBoards();
 });
-
 </script>
 
 <style scoped>
 .grid-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    /* Fuerza 4 columnas en la grilla */
-    grid-auto-flow: row;
-    justify-content: center;
-    overflow-x: auto;
-    gap: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
     padding: 10px;
     max-width: 100%;
+    overflow-x: auto;
 }
 
 .tablero {
-    background-color: #0F1204;
-    border: 1px solid #0F1204;
-    padding: 20px;
+    background-color: var(--primary-color);
     min-width: 300px;
-    /* Ancho mínimo más pequeño para permitir 4 elementos */
     max-width: 600px;
-    /* Ancho máximo para los tableros */
     min-height: 500px;
-    /* Altura mínima para los tableros */
     max-height: 800px;
-    /* Altura máxima para los tableros */
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 7px;
+    box-shadow: 5px 3px 9px rgba(1, 1, 1, 0.4); /* Sombra agregada */
 }
 
 .elemento {
-    font-size: 1.2em;
-    width: auto;
+    margin-top: 10px;
+    color: aliceblue;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    /* gap: 10px; */
+    /* padding: 0 10px; */
+    /* padding-inline: 10px; */
+    padding-left: 10px;
+    width: 100%;
+}
+
+.titulo {
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
-    color: aliceblue;
+    text-overflow: ellipsis; /* clip */
+    margin: 0;
+    margin-top: 0.4rem;
+    font-size: 1.2em;
 }
 
-button {
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-top: 10px;
+.iconos {
+    display: flex;
+    /* gap: 10px; */
 }
 
-.delete-btn {
-    background-color: red;
-    color: white;
+.iconos button {
+    background-color: transparent;
     border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
     cursor: pointer;
 }
 
@@ -240,7 +243,7 @@ form {
     flex-direction: column;
 }
 
-form>div {
+form > div {
     margin-bottom: 10px;
 }
 
@@ -255,13 +258,17 @@ input {
 
 button {
     padding: 10px;
-    background-color: #007bff;
     color: white;
     border: none;
     cursor: pointer;
 }
 
+.btn-add-board {
+    background-color: var(--buttons-color);
+}
+
 button:hover {
     background-color: #0056b3;
+    border-radius: 4px;
 }
 </style>

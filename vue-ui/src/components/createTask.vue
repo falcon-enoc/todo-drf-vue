@@ -2,7 +2,10 @@
 <template>
   <div>
     <!-- Botón que abre el modal -->
-    <button type="button" class="btn btn-primary" @click="openModal">Crear Nueva Tarea</button>
+    <!-- <button type="button" class="btn btn-primary card" @click="openModal">Crear Nueva Tarea</button> -->
+    <div class="task-button-container">
+      <button type="button" class="btn-circle" @click="openModal">+</button>
+    </div>
 
     <!-- Modal del formulario -->
     <div v-if="showModal" class="modal">
@@ -114,7 +117,8 @@ export default {
         active: true,
         refeer_task: null,
         level: 0,
-        board: this.boardId // Utiliza la prop para asignar el board
+        board: this.boardId, // Utiliza la prop para asignar el board
+        user: 1
       },
       tags: [], // Lista de etiquetas disponibles
       selectedTags: [], // Etiquetas seleccionadas
@@ -241,4 +245,31 @@ export default {
   text-decoration: none;
   cursor: pointer;
 }
+
+.task-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Ajusta según sea necesario */
+}
+
+
+.btn-circle {
+            width: 50px; /* Ajusta el tamaño según tus necesidades */
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px; /* Tamaño del símbolo + */
+            background-color: var(--buttons-color);
+            color: white;
+            border: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+.btn-circle:hover {
+    background-color: #0056b3;
+}
+
 </style>

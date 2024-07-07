@@ -1,6 +1,17 @@
 from django.db import models
 from django.utils import timezone
 
+"""
+Proyectos ---> Usuario
+Tableros ---> Proyectos
+Tareas ---> Tableros
+Tareas ---> usuario
+
+Tareas --> Tableros --> Proyectos --> Usuario
+Tareas --> Usuario
+Tareas --> Tareas
+Tareas --> Tags
+"""
 
 class Tag(models.Model):
     tag = models.CharField(max_length=255, unique=True)
@@ -81,8 +92,8 @@ class Task(models.Model):
     tags = models.ManyToManyField(Tag, related_name='tasks', blank=True)
     refeer_task = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, related_name='related_tasks')
     level = models.IntegerField(default=0)
-    board = models.ForeignKey('Board', null=True, blank=True, on_delete=models.CASCADE, related_name='tasks')  # Hacer el campo anulable
-    user = models.ForeignKey('User', null=True, blank=True, on_delete=models.CASCADE, related_name='tasks')  # Hacer el campo anulable
+    board = models.ForeignKey(Board, on_delete=models.CASCADE, related_name='tasks')  # Proporciona un valor predeterminado adecuado
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks')
 
     class Meta:
         verbose_name = 'Tarea'
