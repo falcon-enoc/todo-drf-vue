@@ -71,7 +71,7 @@ watch(() => props.boardId, (newBoardId) => {
 .card {
     height: 50px;
     width: 100%; /* Ocupa todo el ancho disponible dentro del tablero */
-    background-color: #30373e;
+    background-color: var(--secondary-color);
     color: whitesmoke;
     display: flex;
     justify-content: center;

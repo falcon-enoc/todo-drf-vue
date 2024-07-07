@@ -117,7 +117,8 @@ export default {
         active: true,
         refeer_task: null,
         level: 0,
-        board: this.boardId // Utiliza la prop para asignar el board
+        board: this.boardId, // Utiliza la prop para asignar el board
+        user: 1
       },
       tags: [], // Lista de etiquetas disponibles
       selectedTags: [], // Etiquetas seleccionadas
@@ -260,7 +261,7 @@ export default {
             align-items: center;
             justify-content: center;
             font-size: 24px; /* Tamaño del símbolo + */
-            background-color: #007bff;
+            background-color: var(--buttons-color);
             color: white;
             border: none;
             outline: none;

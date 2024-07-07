@@ -1,3 +1,13 @@
+/* src/assets/css/variables.css */
+:root {
+  --primary-color: #2f3a52; /*board*/
+  --secondary-color: #858f9f6a;  /* task */
+  --background-color: #435475; /* background*/
+  --text-color: #F1F6F9;
+
+  --buttons-color: #1d5fa591;
+}
+
 body{
-  background-color: #888;
+  background-color: var(--background-color);
 }
