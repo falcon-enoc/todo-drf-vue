@@ -1,13 +1,9 @@
-<!-- CreateTaskComponent.vue -->
 <template>
   <div>
-    <!-- Botón que abre el modal -->
-    <!-- <button type="button" class="btn btn-primary card" @click="openModal">Crear Nueva Tarea</button> -->
     <div class="task-button-container">
       <button type="button" class="btn-circle" @click="openModal">+</button>
     </div>
 
-    <!-- Modal del formulario -->
     <div v-if="showModal" class="modal">
       <div class="modal-content">
         <span class="close" @click="closeModal">&times;</span>
@@ -36,7 +32,6 @@
             <input type="datetime-local" id="deadline_time" class="form-control" v-model="task.deadline_time" />
           </div>
 
-          <!-- Desplegables de etiquetas -->
           <div class="mb-3">
             <label for="tags" class="form-label">Etiquetas:</label>
             <div class="d-flex">
@@ -105,7 +100,7 @@ export default {
   },
   data() {
     return {
-      showModal: false, // Estado para mostrar u ocultar el modal
+      showModal: false,
       showTagPanel: false,
       task: {
         title: "",
@@ -117,11 +112,11 @@ export default {
         active: true,
         refeer_task: null,
         level: 0,
-        board: this.boardId, // Utiliza la prop para asignar el board
+        board: this.boardId,
         user: 1
       },
-      tags: [], // Lista de etiquetas disponibles
-      selectedTags: [], // Etiquetas seleccionadas
+      tags: [],
+      selectedTags: [],
       error: null,
     };
   },
@@ -145,20 +140,19 @@ export default {
     },
     async submitTask() {
       try {
-        // Asigna los IDs de las etiquetas seleccionadas
         this.task.tags = this.selectedTags.map(tag => tag.id);
 
-        // Formatear fecha y hora correctamente para Django
         if (this.task.deadline_time) {
           this.task.deadline_time = new Date(this.task.deadline_time).toISOString();
         }
 
+        console.log('Submitting task:', this.task);
         await createTask(this.task);
-        this.$emit('taskCreated'); // Emitir el evento con los datos de la tarea creada
-        // alert("Tarea creada con éxito");
+        this.$emit('taskCreated');
         this.resetForm();
-        this.closeModal(); // Cierra el modal después de crear la tarea
+        this.closeModal();
       } catch (error) {
+        console.error('Error creating task:', error);
         this.error = error;
       }
     },
@@ -173,7 +167,8 @@ export default {
         active: true,
         refeer_task: null,
         level: 0,
-        board: this.boardId // Resetea el board al valor de la prop
+        board: this.boardId,
+        user: 1
       };
       this.selectedTags = [];
       this.error = null;
