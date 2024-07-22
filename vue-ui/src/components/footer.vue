@@ -8,7 +8,8 @@
   
   <style scoped>
   .footer {
-    position: fixed;
+    /* position: inherit; */
+    position: relative;
     bottom: 0;
     width: 100%;
     height: 4rem; /* Ajusta la altura del footer */
