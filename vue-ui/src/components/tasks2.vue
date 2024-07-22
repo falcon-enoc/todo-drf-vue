@@ -61,7 +61,7 @@ onMounted(() => {
     loadTasks();
 });
 
-watch(() => props.boardId, (newBoardId) => {
+watch(() => props.boardId, () => {
     loadTasks();
 });
 
